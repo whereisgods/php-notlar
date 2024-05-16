@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - PHP Forum</title>
+    <title>404 - PHP Notlar</title>
     <link rel="icon" href="https://github.com/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
@@ -267,7 +267,7 @@
           <text id="title" transform="matrix(1 0 0 1 44.7249 78)">404 Hatası</text>
         </svg>
         <p>Böyle bir sayfa yok: <code><?php echo $_SERVER['REQUEST_URI']; ?></code></p>
-        <a href="localhost"><button id="newBtn" class="btn" disabled>&#8594; &nbsp;Ana Sayfaya Dön</button></a>
+        <a href="http://localhost"><button id="newBtn" class="btn" disabled>&#8594; &nbsp;Ana Sayfaya Dön</button></a>
         </div>
       </body>
 </html>
