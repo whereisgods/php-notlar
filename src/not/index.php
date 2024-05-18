@@ -80,7 +80,7 @@ if(!isset($_COOKIE['user_id'])) {
 		<div class="container mt-5">
         <h2 class="mb-4">Hoş geldin</h2>
 		<img class="img-fluid" src="1.png">
-        <p>Hoş geldin, sol bardan Twitter ya da Instagram'ı seçerek şifre ve adını kaydedebilir ve kaydettiğin notları görüntüleyebilirsin. Başka platformlar kullanıyorsan Genel Notlar kısmına giderek koyduğun diğer şifreleri görüntüleyebilirsin. Merak etme, güvendeler.</p>
+        <p>Hoş geldin, sol bardan sosyal medya veya bankalar kısmını seçip çeşitli banka veya sosyal medya uygulamalarında olan bilgilerini kaydedebilir ve kaydettiğin notları görüntüleyebilirsin. Başka platformlar kullanıyorsan Genel Notlar kısmına giderek koyduğun diğer şifreleri görüntüleyebilirsin. Merak etme, güvendeler.</p>
       </div>
 		</div>
 		<script>
