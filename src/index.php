@@ -85,7 +85,7 @@ if ($user_id !== null) {
                     <?php
                     if ($username !== "") {
                         echo '<a href="logout" class="btn btn-danger">Çıkış Yap</a><br><hr>
-                        Uygulamalarda ki şifrelerini ve kullanıcı adlarını barındırmak için basit ve modern bir not uygulaması, hızlıdır ve güvenlidir.<br><br>Servis sıkıntısız çalışıyor 18.05.2024.';
+                        Uygulamalarda ki şifrelerini ve kullanıcı adlarını barındırmak için basit ve modern bir not uygulaması, hızlıdır ve güvenlidir.<br><br>Servis sıkıntısız çalışıyor: 18.05.2024';
                     } else {
                         echo '<p>Bu bir not uygulaması, önce giriş yapmalısın veya kayıt olmalısın.</p>';
                     }
