@@ -38,9 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_id'] = $user['id'];
 
                 // Kullanıcının girişi hatırlaması için çerez oluştur
-                if (isset($_POST['remember_me']) && $_POST['remember_me'] == 1) {
-                    setcookie("user_id", $user['id'], time() + (30 * 24 * 60 * 60), "/", "", true, true);
-                }
+                setcookie("user_id", $user['id'], time() + (30 * 24 * 60 * 60), "/", "", true, true);
 
                 header("Location: ./"); // Başarılı giriş sonrası yönlendir
                 exit();
@@ -124,10 +122,10 @@ mysqli_close($conn);
                     <label for="password">Şifre</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                   </div>
-                  <div class="hata form-check">
-                    <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me" value="1">
-                    <label class="form-check-label" for="remember_me">Beni Hatırla</label>
-                  </div>
+                  <div class="hata form-group">
+                  <input type="checkbox" id="remember_me" name="remember_me" checked>
+                  <label class="form-check-label" for="remember_me">İyi misin?</label>
+				  </div>
                   <div class="hata">
                   <button type="submit" class="btn btn-primary">Giriş Yap</button>
             </div>

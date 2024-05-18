@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="tr">
 <head>
-    <title>Notlar - Anasayfa</title>
+    <title>Notlar - Sosyal medya</title>
     <link rel="icon" href="../logo.jpg">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
