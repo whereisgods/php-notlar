@@ -1,4 +1,14 @@
 <?php
+// Cookie var mı kontrol et
+if(isset($_COOKIE['user_id'])) {
+    // Cookie var ise yönlendir
+    header("Location: ./");
+    exit(); // Yönlendirmeden sonra scriptin devam etmemesi için exit() kullanılır
+} else {
+    // Cookie yok ise farklı bir işlem yapabilir veya kullanıcıyı bilgilendirebilirsiniz
+}
+?>
+<?php
 session_start(); // Oturumu başlat
 
 include('connect.php');
