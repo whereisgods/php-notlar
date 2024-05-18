@@ -66,10 +66,10 @@ if(!isset($_COOKIE['user_id'])) {
 				<a href="./genel"><span class="fa fa-globe mr-3"></span> Genel notlar</a>
 				</li>
 	          <li>
-	              <a href="./instagram"><span class="fa fa-instagram mr-3"></span> İnstagram</a>
+	              <a href="./sosyal"><span class="fa fa-hashtag mr-3"></span> Sosyal medya</a>
 	          </li>
 	          <li>
-              <a href="./twitter"><span class="fa fa-twitter mr-3"></span> Twitter</a>
+              <a href="./banka"><span class="fa fa-bank mr-3"></span> Bankalar</a>
 	          </li>
 	        </ul>
 	      </div>
@@ -77,6 +77,7 @@ if(!isset($_COOKIE['user_id'])) {
 
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
+		<div class="container mt-5">
         <h2 class="mb-4">Hoş geldin</h2>
 		<img class="img-fluid" src="1.png">
         <p>Hoş geldin, sol bardan Twitter ya da Instagram'ı seçerek şifre ve adını kaydedebilir ve kaydettiğin notları görüntüleyebilirsin. Başka platformlar kullanıyorsan Genel Notlar kısmına giderek koyduğun diğer şifreleri görüntüleyebilirsin. Merak etme, güvendeler.</p>

@@ -87,11 +87,21 @@ $conn->close();
 	resize: both;
 }
 
+#balloon {
+    background: #333;
+    font: 13px asap,arial;
+    color: #fff;
+    padding: 8px;
+    text-align: center;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin: 4px 0 4px 4px;
+}
 		</style>
   </head>
   <body data-bs-theme="dark">
 		
-		<div class="wrapper d-flex align-items-stretch">
+  <div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar" class="active">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
@@ -112,10 +122,10 @@ $conn->close();
 				<a href="./genel"><span class="fa fa-globe mr-3"></span> Genel notlar</a>
 				</li>
 	          <li>
-	              <a href="./instagram"><span class="fa fa-instagram mr-3"></span> İnstagram</a>
+	              <a href="./sosyal"><span class="fa fa-hashtag mr-3"></span> Sosyal medya</a>
 	          </li>
 	          <li>
-              <a href="./twitter"><span class="fa fa-twitter mr-3"></span> Twitter</a>
+              <a href="./banka"><span class="fa fa-bank mr-3"></span> Bankalar</a>
 	          </li>
 	        </ul>
 	      </div>
@@ -132,7 +142,9 @@ $conn->close();
                     <label for="notes">Notlar:</label>
                     <textarea id="notes" name="notes"><?php echo htmlspecialchars($notes); ?></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Güncelle</button>
+				<button type="button" class="btn btn-primary" onclick="copyUrl()">Kopyala</button>
+				<button type="submit" class="btn btn-primary">Güncelle</button>
+				<div id="balloon" style="display: none;">Kopyalandı!</div>
             </form>
         </div>
     </div>
@@ -166,10 +178,22 @@ $conn->close();
 				currentTheme = savedTheme;
 			  }
 			});
-		  </script>
+			
+			function copyUrl() {
+				var notesTextarea = document.getElementById('notes');
+				notesTextarea.select();
+				document.execCommand('copy');
+				var balloon = document.getElementById('balloon');
+				balloon.style.display = 'table';
+				setTimeout(function () {
+					balloon.style.display = 'none';
+				}, 2000);
+			}
+		</script>
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
   </body>
 </html>

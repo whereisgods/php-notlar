@@ -57,136 +57,171 @@ $conn->close();
 <!doctype html>
 <html lang="tr">
   <head>
-  	<title>Notlar - Anasayfa</title>
-	<link rel="icon" href="../logo.jpg">
+    <title>Notlar - Anasayfa</title>
+    <link rel="icon" href="../logo.jpg">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/style.css">
-		<style>
-			/* Dark theme styles */
-			body[data-bs-theme="dark"] {
-				background-color: #222;
-				color: #fff;
-			}
-	
-			body[data-bs-theme="dark"] h1,
-			body[data-bs-theme="dark"] h2,
-			body[data-bs-theme="dark"] h3,
-			body[data-bs-theme="dark"] h4,
-			body[data-bs-theme="dark"] h5,
-			body[data-bs-theme="dark"] h6 {
-				color: #fff;
-			}
-	
-			body[data-bs-theme="dark"] a {
-				color: #fff;
-			}
-	
-			body[data-bs-theme="dark"] a:hover {
-				color: #ccc;
-			}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+      /* Dark theme styles */
+      body[data-bs-theme="dark"] {
+        background-color: #222;
+        color: #fff;
+      }
 
-            @media only screen and (max-width: 700px) {
-    .form-control {
-        width: 300px;
-    }
-}
+      body[data-bs-theme="dark"] h1,
+      body[data-bs-theme="dark"] h2,
+      body[data-bs-theme="dark"] h3,
+      body[data-bs-theme="dark"] h4,
+      body[data-bs-theme="dark"] h5,
+      body[data-bs-theme="dark"] h6 {
+        color: #fff;
+      }
 
-@media only screen and (min-width: 701px) {
-    .form-control {
-        width: 400px;
-    }
-}
+      body[data-bs-theme="dark"] a {
+        color: #fff;
+      }
 
-		</style>
+      body[data-bs-theme="dark"] a:hover {
+        color: #ccc;
+      }
+
+      @media only screen and (max-width: 700px) {
+        .form-control {
+          width: 300px;
+        }
+      }
+
+      @media only screen and (min-width: 701px) {
+        .form-control {
+          width: 400px;
+        }
+      }
+
+      .copy-button {
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      #balloon {
+        background: #333;
+        font: 13px asap, arial;
+        color: #fff;
+        padding: 8px;
+        text-align: center;
+        border-radius: 3px;
+        white-space: nowrap;
+        margin: 4px 0 4px 4px;
+        display: none;
+        position: absolute;
+      }
+    </style>
   </head>
   <body data-bs-theme="dark">
-		
-		<div class="wrapper d-flex align-items-stretch">
-			<nav id="sidebar" class="active">
-				<div class="custom-menu">
-					<button type="button" id="sidebarCollapse" class="btn btn-primary">
-	          <i class="fa fa-bars"></i>
-	          <span class="sr-only">Toggle Menu</span>
-	        </button>
+    <div class="wrapper d-flex align-items-stretch">
+      <nav id="sidebar" class="active">
+        <div class="custom-menu">
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Toggle Menu</span>
+          </button>
         </div>
-				<div class="p-4">
-		  		<h1><a href="../" class="logo">Notlar</a></h1>
-	        <ul class="list-unstyled components mb-5">
-				<li>
-					<button class="btn btn-outline-light" id="toggle-theme">Light</button>
-				  </li>
-	          <li>
-	            <a href="./"><span class="fa fa-home mr-3"></span> Anasayfa</a>
-	          </li>
-	          <li>
-				<a href="./genel"><span class="fa fa-globe mr-3"></span> Genel notlar</a>
-				</li>
-	          <li>
-	              <a href="./instagram"><span class="fa fa-instagram mr-3"></span> İnstagram</a>
-	          </li>
-	          <li class="active">
-              <a href="./twitter"><span class="fa fa-twitter mr-3"></span> Twitter</a>
-	          </li>
-	        </ul>
-	      </div>
-    	</nav>
+        <div class="p-4">
+          <h1><a href="../" class="logo">Notlar</a></h1>
+          <ul class="list-unstyled components mb-5">
+            <li>
+              <button class="btn btn-outline-light" id="toggle-theme">Light</button>
+            </li>
+            <li>
+              <a href="./"><span class="fa fa-home mr-3"></span> Anasayfa</a>
+            </li>
+            <li>
+              <a href="./genel"><span class="fa fa-globe mr-3"></span> Genel notlar</a>
+            </li>
+            <li class="active">
+              <a href="./sosyal"><span class="fa fa-hashtag mr-3"></span> Sosyal medya</a>
+            </li>
+            <li>
+              <a href="./banka"><span class="fa fa-bank mr-3"></span> Bankalar</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-        <!-- Page Content  -->
+      <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
         <div class="container mt-5">
-        <div class="mt-4">
+          <div class="mt-4">
             <h3>Twitter bilgilerin:</h3>
-            <p><strong>Twitter Kullanıcı Adı:</strong> <?php echo $username; ?></p>
-            <p><strong>Twitter Şifre:</strong> <?php echo $password; ?></p>
-        </div>
-        <h3 class="mb-4">Twitter bilgilerini düzenle:</h3>
-        <?php if(isset($result_message)) echo "<div class='alert alert-info'>$result_message</div>"; ?>
-        <form method="post">
-        <div class="form-group">
-                <label for="username">Twitter Kullanıcı Adı:</label>
-                <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>">
+            <p><strong>Kullanıcı Adı / E-posta:</strong> <span id="username-text"><?php echo $username; ?></span> <button class="btn btn-primary copy-button" onclick="copyToClipboard('username-text', this)">Kopyala</button></p>
+            <p><strong>Şifre:</strong> <span id="password-text"><?php echo $password; ?></span> <button class="btn btn-primary copy-button" onclick="copyToClipboard('password-text', this)">Kopyala</button></p>
+          </div>
+          <h3 class="mb-4">Twitter bilgilerini düzenle:</h3>
+          <?php if(isset($result_message)) echo "<div class='alert alert-info'>$result_message</div>"; ?>
+          <form method="post">
+            <div class="form-group">
+              <label for="username">Kullanıcı Adı / E-posta:</label>
+              <input type="text" class="form-control" id="username" name="username" value="<?php echo $username; ?>">
             </div>
             <div class="form-group">
-                <label for="password">Twitter Şifre:</label>
-                <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>">
+              <label for="password">Şifre:</label>
+              <input type="password" class="form-control" id="password" name="password" value="<?php echo $password; ?>">
             </div>
             <button type="submit" class="btn btn-primary">Güncelle</button>
-        </form>
-    </div>
+          </form>
+          <div id="balloon">Kopyalandı!</div>
+        </div>
       </div>
-		</div>
-		<script>
-			const toggleButton = document.getElementById('toggle-theme');
-			const body = document.body;
-			let currentTheme = 'dark';
-			toggleButton.addEventListener('click', function() {
-			  if (body.getAttribute('data-bs-theme') === 'light') {
-				body.setAttribute('data-bs-theme', 'dark');
-				toggleButton.textContent = 'Light';
-				currentTheme = 'dark';
-			  } else {
-				body.setAttribute('data-bs-theme', 'light');
-				toggleButton.textContent = 'Dark';
-				currentTheme = 'light';
-			  }
-			  localStorage.setItem('theme', currentTheme);
-			});
-			window.addEventListener('DOMContentLoaded', function() {
-			  const savedTheme = localStorage.getItem('theme');
-			  if (savedTheme) {
-				body.setAttribute('data-bs-theme', savedTheme);
-				if (savedTheme === 'dark') {
-				  toggleButton.textContent = 'Light';
-				} else {
-				  toggleButton.textContent = 'Dark';
-				}
-				currentTheme = savedTheme;
-			  }
-			});
-		  </script>
+    </div>
+
+    <script>
+      const toggleButton = document.getElementById('toggle-theme');
+      const body = document.body;
+      let currentTheme = 'dark';
+      toggleButton.addEventListener('click', function() {
+        if (body.getAttribute('data-bs-theme') === 'light') {
+          body.setAttribute('data-bs-theme', 'dark');
+          toggleButton.textContent = 'Light';
+          currentTheme = 'dark';
+        } else {
+          body.setAttribute('data-bs-theme', 'light');
+          toggleButton.textContent = 'Dark';
+          currentTheme = 'light';
+        }
+        localStorage.setItem('theme', currentTheme);
+      });
+      window.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          body.setAttribute('data-bs-theme', savedTheme);
+          if (savedTheme === 'dark') {
+            toggleButton.textContent = 'Light';
+          } else {
+            toggleButton.textContent = 'Dark';
+          }
+          currentTheme = savedTheme;
+        }
+      });
+
+      function copyToClipboard(elementId, button) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          const balloon = document.getElementById('balloon');
+          balloon.style.display = 'inline-block';
+          const rect = button.getBoundingClientRect();
+          balloon.style.left = `${rect.left}px`;
+          balloon.style.top = `${rect.bottom + window.scrollY}px`;
+          setTimeout(() => {
+            balloon.style.display = 'none';
+          }, 2000);
+        }).catch(err => {
+          console.error('Kopyalama hatası:', err);
+        });
+      }
+    </script>
+
     <script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
