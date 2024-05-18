@@ -1,14 +1,4 @@
 <?php
-// Cookie var mı kontrol et
-if(isset($_COOKIE['user_id'])) {
-    // Cookie var ise yönlendir
-    header("Location: ./");
-    exit(); // Yönlendirmeden sonra scriptin devam etmemesi için exit() kullanılır
-} else {
-    // Cookie yok ise farklı bir işlem yapabilir veya kullanıcıyı bilgilendirebilirsiniz
-}
-?>
-<?php
 session_start(); // Oturumu başlat
 
 include('connect.php');
@@ -18,6 +8,16 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $captcha_response = $_POST['g-recaptcha-response']; // Google reCAPTCHA yanıtı
+
+    // Google reCAPTCHA doğrulaması
+    $secret_key = "6Lemq-ApAAAAAEMHwh_Uk0BMoF5caeAizzJ96pJr";
+    $captcha_verify_response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secret_key}&response={$captcha_response}");
+    $captcha_verify_response = json_decode($captcha_verify_response);
+
+    if (!$captcha_verify_response->success) {
+        $errors[] = "Google reCAPTCHA doğrulaması başarısız. Lütfen doğrulamayı tekrar deneyin.";
+    }
 
     $username = mysqli_real_escape_string($conn, $username);
     $password = mysqli_real_escape_string($conn, $password);
@@ -59,6 +59,7 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giriş yap - Not uygulaması</title>
+    <meta name="description" content="Giriş yap.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="./logo.jpg">
     <style>
@@ -70,6 +71,8 @@ mysqli_close($conn);
         margin-top: 10px;
       }
     </style>
+    <!-- Google reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body data-bs-theme="dark">
     <header>
@@ -121,6 +124,10 @@ mysqli_close($conn);
                   <div class="hata form-group">
                     <label for="password">Şifre</label>
                     <input type="password" class="form-control" id="password" name="password" required>
+                  </div>
+                  <div class="hata form-group">
+                    <!-- Google reCAPTCHA alanı -->
+                    <div class="g-recaptcha" data-sitekey="6Lemq-ApAAAAAJsrR5NdlF5enc06eHnCRxn6Rp_u"></div>
                   </div>
                   <div class="hata form-group">
                   <input type="checkbox" id="remember_me" name="remember_me" checked>

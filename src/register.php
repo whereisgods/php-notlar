@@ -1,31 +1,32 @@
 <?php
-// Cookie var mı kontrol et
-if(isset($_COOKIE['user_id'])) {
-    // Cookie var ise yönlendir
-    header("Location: ./");
-    exit(); // Yönlendirmeden sonra scriptin devam etmemesi için exit() kullanılır
-} else {
-    // Cookie yok ise farklı bir işlem yapabilir veya kullanıcıyı bilgilendirebilirsiniz
-}
-?>
-<?php
+session_start();
+
 // Veritabanı bağlantısını yapılandırma
 include('connect.php');
 
 // Hata dizisi
 $errors = [];
 
+// Form gönderildiğinde CAPTCHA'yı kontrol etmek için
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Kullanıcı adı ve şifre alınır
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    
+    // CAPTCHA'yı kontrol et
+    $captcha_response = $_POST['g-recaptcha-response'];
+    $secret_key = '6Lemq-ApAAAAAEMHwh_Uk0BMoF5caeAizzJ96pJr'; // Google reCAPTCHA gizli anahtarınız
+    $verify_response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$secret_key&response=$captcha_response");
+    $response_data = json_decode($verify_response);
+    
+    if (!$response_data->success) {
+        // CAPTCHA doğrulanmadıysa, hata ekleyin
+        $errors[] = "Lütfen CAPTCHA'yı doğru şekilde doldurun.";
+    }
 
-    // SQL enjeksiyonundan koruma için kullanıcı girdileri temizlenir
-    $username = mysqli_real_escape_string($conn, $username);
-    $password = mysqli_real_escape_string($conn, $password);
-    $confirm_password = mysqli_real_escape_string($conn, $confirm_password);
-
+    // Diğer form doğrulamaları burada devam eder...
+    
     // Alanların boş olup olmadığını kontrol edin
     if (empty($username) || empty($password) || empty($confirm_password)) {
         $errors[] = "Tüm alanları doldurun.";
@@ -66,50 +67,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Veritabanı bağlantısını kapatma
 mysqli_close($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kayıt ol - Not uygulaması</title>
+    <meta name="description" content="Kayıt ol.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="icon" href="./logo.jpg">
     <style>
-      .dark {
-          color: white;
-      }
-      
-      .hata {
-        margin-top: 10px;
-      }
+        .dark {
+            color: white;
+        }
+
+        .hata {
+            margin-top: 10px;
+        }
     </style>
-  </head>
-  <body data-bs-theme="dark">
-    <header>
+</head>
+<body data-bs-theme="dark">
+<header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="./">
-            <img src="./logo.jpg" alt="Linux Logo" height="40">
-          </a>
-          <div class="dark">
-            <li>
-              <button class="btn btn-outline-light" id="toggle-theme">Light</button>
-            </li>
-          </div>
-          <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="./register">Kayıt ol</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="./login">Giriş yap</a>
-              </li>
-            </ul>
-          </div>
+            <a class="navbar-brand" href="./">
+                <img src="./logo.jpg" alt="Linux Logo" height="40">
+            </a>
+            <div class="dark">
+                <li>
+                    <button class="btn btn-outline-light" id="toggle-theme">Light</button>
+                </li>
+            </div>
+            <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="./register">Kayıt ol</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="./login">Giriş yap</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </nav>    
-    </header>
-    <main>
+    </nav>
+</header>
+<main>
 
     <div class="container mt-5">
         <div class="row justify-content-center">
@@ -140,55 +143,60 @@ mysqli_close($conn);
                                 <label for="confirm_password">Şifre Tekrarı</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                             </div>
+                            <div class="hata form-group">
+                                <!-- Google reCAPTCHA alanı -->
+                                <div class="g-recaptcha" data-sitekey="6Lemq-ApAAAAAJsrR5NdlF5enc06eHnCRxn6Rp_u"></div>
+                            </div>
                             <div class="hata">
-                            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
-                    </div>
+                                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </main>
-    <script>
-      const toggleButton = document.getElementById('toggle-theme');
-      const body = document.body;
-      let currentTheme = 'dark';
-      toggleButton.addEventListener('click', function() {
+</main>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+    const toggleButton = document.getElementById('toggle-theme');
+    const body = document.body;
+    let currentTheme = 'dark';
+    toggleButton.addEventListener('click', function () {
         if (body.getAttribute('data-bs-theme') === 'light') {
-          body.setAttribute('data-bs-theme', 'dark');
-          toggleButton.textContent = 'Light';
-          currentTheme = 'dark';
+            body.setAttribute('data-bs-theme', 'dark');
+            toggleButton.textContent = 'Light';
+            currentTheme = 'dark';
         } else {
-          body.setAttribute('data-bs-theme', 'light');
-          toggleButton.textContent = 'Dark';
-          currentTheme = 'light';
+            body.setAttribute('data-bs-theme', 'light');
+            toggleButton.textContent = 'Dark';
+            currentTheme = 'light';
         }
         localStorage.setItem('theme', currentTheme);
-      });
-      window.addEventListener('DOMContentLoaded', function() {
+    });
+    window.addEventListener('DOMContentLoaded', function () {
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
-          body.setAttribute('data-bs-theme', savedTheme);
-          if (savedTheme === 'dark') {
-            toggleButton.textContent = 'Light';
-          } else {
-            toggleButton.textContent = 'Dark';
-          }
-          currentTheme = savedTheme;
+            body.setAttribute('data-bs-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                toggleButton.textContent = 'Light';
+            } else {
+                toggleButton.textContent = 'Dark';
+            }
+            currentTheme = savedTheme;
         }
-      });
-    </script>
-    <script>
+    });
+</script>
+<script>
     // Formun birden fazla gönderilmesini engellemek için spam koruması ekle
     var formSubmitted = false;
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
+    document.getElementById("registerForm").addEventListener("submit", function (event) {
         if (formSubmitted) {
             event.preventDefault();
             alert("Form zaten gönderildi, lütfen bekleyin.");
         } else {
             formSubmitted = true;
-            setTimeout(function() {
+            setTimeout(function () {
                 formSubmitted = false;
             }, 10000); // 10 saniye beklet
         }
@@ -196,13 +204,3 @@ mysqli_close($conn);
 </script>
 </body>
 </html>
-<?php
-if (isset($_COOKIE['admin_cookie'])) {
-    // Eğer admin_cookie çerezi varsa, hiçbir şey yapma ve kodu burada sonlandır
-    exit();
-}
-
-if (isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
-    header("Location: ./"); // Kullanıcı zaten giriş yapmışsa veya çerez varsa yönlendir
-    exit();
-}
