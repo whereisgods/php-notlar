@@ -13,13 +13,13 @@ CREATE TABLE `sifreler` (
   `garanti_kartsifre` varchar(60) NOT NULL,
   `garanti_mobilsifre` varchar(60) NOT NULL,
   `notlar` text NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `id` VARCHAR(60) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
 );

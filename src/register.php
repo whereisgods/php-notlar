@@ -50,24 +50,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Hatalar yoksa, kullanıcıyı veritabanına ekleyin
     if (count($errors) === 0) {
         // Kullanıcı adının benzersiz olup olmadığını kontrol edin
-        $query = "SELECT * FROM users WHERE username='$username'";
-        $result = mysqli_query($conn, $query);
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if (mysqli_num_rows($result) > 0) {
+        if ($result->num_rows > 0) {
             $errors[] = "Bu kullanıcı adı zaten kullanılıyor. Lütfen farklı bir kullanıcı adı seçin.";
         } else {
             // Şifreyi hashleyin ve veritabanına ekleyin
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $insert_query = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
 
-            if (mysqli_query($conn, $insert_query)) {
+            // Rastgele bir ID oluşturun
+            $user_id = bin2hex(random_bytes(16)); // 32 karakter uzunluğunda rastgele bir SHA-256 ID
+
+            $stmt = $conn->prepare("INSERT INTO users (id, username, password) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $user_id, $username, $hashed_password);
+
+            if ($stmt->execute()) {
                 // Kayıt başarılı, kullanıcıyı hoş geldiniz sayfasına yönlendirin
                 header("Location: ./login");
                 exit();
             } else {
-                $errors[] = "Kayıt sırasında bir hata oluştu: " . mysqli_error($conn);
+                $errors[] = "Kayıt sırasında bir hata oluştu: " . $conn->error;
             }
         }
+        $stmt->close();
     }
 }
 
