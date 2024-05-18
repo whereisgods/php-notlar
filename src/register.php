@@ -51,11 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert_query = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
 
             if (mysqli_query($conn, $insert_query)) {
-                // Kayıt başarılı, kullanıcıyı oturumla işaretleyin
-                $_SESSION['user_id'] = mysqli_insert_id($conn);
-
-                // Kullanıcıyı hoş geldiniz sayfasına yönlendirin
-                header("Location: ./");
+                // Kayıt başarılı, kullanıcıyı hoş geldiniz sayfasına yönlendirin
+                header("Location: ./login");
                 exit();
             } else {
                 $errors[] = "Kayıt sırasında bir hata oluştu: " . mysqli_error($conn);
