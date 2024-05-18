@@ -1,5 +1,5 @@
 CREATE TABLE `sifreler` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `instagram_ad` varchar(60) NOT NULL,
   `instagram_sifre` varchar(60) NOT NULL,
   `twitter_ad` varchar(60) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `sifreler` (
 );
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
